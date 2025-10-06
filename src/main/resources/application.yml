@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: homepage-provision
+ldap:
+  # Use FQDN that matches the cert's SAN/CN
+  url: "ldaps://example.net:636"
+  base: "dc=example,dc=net"
+
+    # Manager/technical bind (used for lookups/searches)
+  managerDn: "uid=admin,ou=people,dc=example,dc=net"
+  managerPassword: "LDAP_ADMIN_PASSWORD"
+
+  # Optional timeouts (ms)
+  connectTimeout: 10000
+  readTimeout: 10000
