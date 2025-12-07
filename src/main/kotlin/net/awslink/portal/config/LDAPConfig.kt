@@ -65,7 +65,7 @@ data class LDAPConfig(
 
     private fun parseLdapsUrl(u: String): Endpoint {
         require(u.lowercase().startsWith("ldap://") || u.lowercase().startsWith("ldaps://")) {
-            "Only ldap:// or ldaps:// URLs are supported. Offending value: $u"
+            "Only ldap(s):// URLs are supported. Offending value: $u"
         }
         val noScheme = u.substringAfter("://")
         val hostPort = noScheme.substringBefore('/')           // strip path/query
@@ -73,7 +73,7 @@ data class LDAPConfig(
             val parts = hostPort.split(':', limit = 2)
             parts[0] to parts[1].toInt()
         } else hostPort to 636
-        require(host.isNotBlank()) { "Invalid ldaps URL (missing host): $u" }
+        require(host.isNotBlank()) { "Invalid ldap(s) URL (missing host): $u" }
         return Endpoint(host.trim(), port)
     }
 }

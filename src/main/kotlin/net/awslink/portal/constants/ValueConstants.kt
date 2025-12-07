@@ -1,6 +1,13 @@
 package net.awslink.portal.constants
 
+import java.time.ZoneOffset
+import java.time.format.DateTimeFormatter
+
 object ValueConstants {
+    val LDAP_USER_TIME_FORMATTER: DateTimeFormatter =
+        DateTimeFormatter.ofPattern("yyyyMMddHHmmssX")
+            .withZone(ZoneOffset.UTC)
+
     const val LDAP_UID = "uid"
     const val LDAP_DISPLAY_NAME = "displayName"
     const val LDAP_EMAIL = "mail"

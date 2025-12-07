@@ -4,8 +4,8 @@ import jakarta.persistence.*
 import java.time.Instant
 
 @Entity
-@Table(name = "portal_group")
-class PortalGroup(
+@Table(name = "user_groups")
+class UserGroup(
     @Column(unique = true)
     val name: String = "",
     val description: String? = null,

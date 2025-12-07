@@ -7,14 +7,21 @@ import org.springframework.stereotype.Service
 @Service
 class LDAPSyncService(
     private val ldapService: LDAPSearchService,
-    private val portalGroupService: PortalGroupService,
-    private val portalUserService: PortalUserService
+    private val userGroupService: UserGroupService,
+    private val userService: UserService
 ) {
     private val logger = LoggerFactory.getLogger(this::class.java)
 
     // Runs every 10 minutes
     @Scheduled(fixedDelay = 600_000)
-    fun scheduler() {
+    fun scheduler() =
+        try {
+            performSync()
+        } catch (e: Exception) {
+            this.logger.error("Error during LDAP synchronization task", e)
+        }
+
+    private fun performSync() {
         this.logger.info("Starting LDAP synchronization task")
         syncLDAPGroups()
         syncLDAPUsers()
@@ -23,11 +30,11 @@ class LDAPSyncService(
 
     private fun syncLDAPGroups() {
         val groups = ldapService.getAllGroups()
-        portalGroupService.syncGroupsFromLDAP(groups)
+        userGroupService.syncGroupsFromLDAP(groups)
     }
 
     private fun syncLDAPUsers() {
         val users = ldapService.getAllUsers()
-        portalUserService.syncUsersFromLDAP(users);
+        userService.syncUsersFromLDAP(users);
     }
 }

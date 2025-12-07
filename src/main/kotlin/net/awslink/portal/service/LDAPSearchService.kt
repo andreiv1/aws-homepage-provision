@@ -14,6 +14,7 @@ import net.awslink.portal.constants.ValueConstants.LDAP_EMAIL
 import net.awslink.portal.constants.ValueConstants.LDAP_MEMBER_OF
 import net.awslink.portal.constants.ValueConstants.LDAP_MODIFIED_DATE
 import net.awslink.portal.constants.ValueConstants.LDAP_UID
+import net.awslink.portal.constants.ValueConstants.LDAP_USER_TIME_FORMATTER
 import net.awslink.portal.constants.ValueConstants.LDAP_UUID
 import net.awslink.portal.model.LDAPGroup
 import net.awslink.portal.model.LDAPUser
@@ -30,9 +31,6 @@ class LDAPSearchService(
     @Qualifier("ldapInterface") val ldap: LDAPInterface
 ) {
     private val logger = LoggerFactory.getLogger(this::class.java)
-    private val LDAP_USER_TIME_FORMATTER: DateTimeFormatter =
-        DateTimeFormatter.ofPattern("yyyyMMddHHmmssX")  // X = Z / +01 / -0300 etc.
-            .withZone(ZoneOffset.UTC)
 
     fun getAllUsers(groupCn: String? = null): List<LDAPUser> {
         val req = SearchRequest(
@@ -50,7 +48,7 @@ class LDAPSearchService(
             LDAP_CN, LDAP_EMAIL, LDAP_DISPLAY_NAME, LDAP_MEMBER_OF, LDAP_CREATION_DATE, LDAP_MODIFIED_DATE
         )
         val res = ldap.search(req)
-        logger.info(res.searchEntries.toString())
+
         return res.searchEntries.map { it.toUser() }
     }
 

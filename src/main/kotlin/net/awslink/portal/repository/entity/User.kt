@@ -4,8 +4,8 @@ import jakarta.persistence.*
 import java.time.Instant
 
 @Entity
-@Table(name = "portal_user")
-class PortalUser(
+@Table(name = "users")
+class User(
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long? = null,
     @Column(unique = true)
@@ -17,15 +17,11 @@ class PortalUser(
     val createDate: Instant? = Instant.now(),
     val updateDate: Instant? = null
 ){
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
-        name = "portal_user_groups",
+        name = "user_group_membership",
         joinColumns = [JoinColumn(name = "user_id")],
         inverseJoinColumns = [JoinColumn(name = "group_id")]
     )
-    var groups: MutableSet<PortalGroup> = mutableSetOf()
-
-    val isLdapUser: Boolean
-        get() = ldapUuid != null
-
+    var groups: MutableSet<UserGroup> = mutableSetOf()
 }
