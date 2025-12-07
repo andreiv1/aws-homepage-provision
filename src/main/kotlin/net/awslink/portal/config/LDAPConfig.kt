@@ -1,4 +1,4 @@
-package net.awslink.homepage_provision.config
+package net.awslink.portal.config
 
 import com.unboundid.ldap.sdk.*
 import com.unboundid.util.ssl.SSLUtil
@@ -64,8 +64,8 @@ data class LDAPConfig(
     private data class Endpoint(val host: String, val port: Int)
 
     private fun parseLdapsUrl(u: String): Endpoint {
-        require(u.lowercase().startsWith("ldaps://")) {
-            "Only ldaps:// URLs are supported. Offending value: $u"
+        require(u.lowercase().startsWith("ldap://") || u.lowercase().startsWith("ldaps://")) {
+            "Only ldap:// or ldaps:// URLs are supported. Offending value: $u"
         }
         val noScheme = u.substringAfter("://")
         val hostPort = noScheme.substringBefore('/')           // strip path/query

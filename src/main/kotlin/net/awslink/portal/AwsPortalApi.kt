@@ -1,21 +1,15 @@
-package net.awslink.homepage_provision
+package net.awslink.portal
 
-import net.awslink.homepage_provision.service.LDAPService
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.context.properties.ConfigurationPropertiesScan
-import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.boot.runApplication
 import org.springframework.scheduling.annotation.EnableScheduling
 
 @SpringBootApplication
 @EnableScheduling
 @ConfigurationPropertiesScan
-class HomepageProvisionApplication
+class AwsPortalApi
 
 fun main(args: Array<String>) {
-	runApplication<HomepageProvisionApplication>(*args)
-
-	class Test(ldapService: LDAPService) {
-
-	}
+	runApplication<AwsPortalApi>(*args)
 }

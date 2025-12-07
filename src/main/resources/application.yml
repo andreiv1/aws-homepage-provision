@@ -1,14 +1,28 @@
 spring:
   application:
-    name: homepage-provision
+    name: aws-portal-api-service
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/aws_test
+    username: aws
+    password: aws
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true
 ldap:
   # Use FQDN that matches the cert's SAN/CN
-  url: "ldaps://example.net:636"
-  base: "dc=example,dc=net"
+  url: "ldaps://awslink.net:636"
+  base: "dc=awslink,dc=net"
 
     # Manager/technical bind (used for lookups/searches)
-  managerDn: "uid=admin,ou=people,dc=example,dc=net"
-  managerPassword: "LDAP_ADMIN_PASSWORD"
+  managerDn: "uid=admin,ou=people,dc=awslink,dc=net"
+  managerPassword: "cv8oag4dKkXBi6AwcHtW"
 
   # Optional timeouts (ms)
   connectTimeout: 10000
